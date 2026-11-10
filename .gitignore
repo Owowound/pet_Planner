@@ -1,0 +1,36 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.DotSettings.user
+TestResults/
+publish/
+
+# Rider / Visual Studio / VS Code
+.idea/
+.vs/
+.vscode/
+*.sln.iml
+
+# Node / Vite
+node_modules/
+dist/
+*.local
+npm-debug.log*
+
+# Секреты и локальные настройки
+.env
+.env.*
+appsettings.*.local.json
+
+# ОС
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Временное
+_backup/
+_to_delete/
+*.zip
+/package-lock.json

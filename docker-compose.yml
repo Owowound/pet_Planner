@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: calendar-postgres
+    environment:
+      POSTGRES_DB: calendar
+      POSTGRES_USER: calendar
+      POSTGRES_PASSWORD: calendar
+    ports:
+      - "5433:5432"
+    volumes:
+      - calendar-data:/var/lib/postgresql/data
+    restart: unless-stopped
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: calendar-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: calendar
+      RABBITMQ_DEFAULT_PASS: calendar
+    restart: unless-stopped
+
+volumes:
+  calendar-data:

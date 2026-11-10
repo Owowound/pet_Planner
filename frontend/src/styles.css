@@ -1,0 +1,1781 @@
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #f7f8fa;
+  --border: #e3e5ea;
+  --text: #1d2129;
+  --muted: #6b7280;
+  --accent: #3b6ef5;
+  --accent-contrast: #ffffff;
+  --today: #3b6ef5;
+  --danger: #d93a2f;
+  --danger-bg: #fdecec;
+  --danger-text: #a3261f;
+  --warning-bg: #fff4dc;
+  --warning-text: #7a4b00;
+  --shadow: 0 12px 40px rgba(20, 24, 33, 0.18);
+  --radius: 10px;
+
+  color-scheme: light;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  color: var(--text);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161b;
+    --surface: #1c1f26;
+    --surface-2: #232730;
+    --border: #2f343f;
+    --text: #e7e9ee;
+    --muted: #9097a5;
+    --accent: #6d93ff;
+    --today: #6d93ff;
+    --danger: #e5534b;
+    --danger-bg: #3a1d1c;
+    --danger-text: #ffb4ab;
+    --warning-bg: #3a2e14;
+    --warning-text: #f5cf7a;
+    --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ---------- Верхняя панель ---------- */
+
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.toolbar-title h1 {
+  margin: 0 0 2px;
+  font-size: 22px;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav {
+  display: flex;
+  gap: 6px;
+}
+
+.add-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(59, 110, 245, 0.35);
+  transition: transform 0.1s ease;
+}
+
+.add-button:hover {
+  transform: scale(1.06);
+}
+
+/* ---------- Кнопки и поля ---------- */
+
+.button {
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.button-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.button-small {
+  padding: 5px 10px;
+  font-size: 13px;
+}
+
+.button-danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: #fff;
+}
+
+.button-danger:hover:not(:disabled) {
+  border-color: var(--danger);
+  filter: brightness(1.08);
+}
+
+.button-danger-outline {
+  color: var(--danger-text);
+}
+
+.button-danger-outline:hover:not(:disabled) {
+  border-color: var(--danger);
+  background: var(--danger-bg);
+}
+
+.button-ghost {
+  background: transparent;
+}
+
+.icon-button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.icon-button:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.icon-button-accent {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 20px;
+}
+
+.icon-button-accent:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  filter: brightness(1.1);
+}
+
+.link-button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  cursor: pointer;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+textarea.input {
+  resize: vertical;
+}
+
+.input-small {
+  width: 80px;
+}
+
+.banner {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.banner-error {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.banner-warning {
+  background: var(--warning-bg);
+  color: var(--warning-text);
+}
+
+/* ---------- Календарь ---------- */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.calendar-weekdays {
+  margin-bottom: 6px;
+}
+
+.weekday {
+  padding: 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.calendar-days.is-loading {
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  min-height: 132px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.day.is-past {
+  background: var(--surface-2);
+}
+
+.day.is-past .day-number {
+  color: var(--muted);
+}
+
+.day.is-today {
+  border-color: var(--today);
+  box-shadow: inset 0 0 0 1px var(--today);
+}
+
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.day-number {
+  font-weight: 600;
+  padding: 2px 4px;
+  white-space: nowrap;
+}
+
+.day.is-today .day-number {
+  color: var(--accent-contrast);
+  background: var(--today);
+  border-radius: 6px;
+}
+
+.day-add {
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.day:hover .day-add,
+.day-add:focus-visible {
+  opacity: 1;
+}
+
+.day-add:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.day-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow-y: auto;
+  max-height: 170px;
+}
+
+/* ---------- Плашка задачи ---------- */
+
+.task-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.task-chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+/* Основная часть плашки: открывает задачу */
+.task-chip-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 5px 2px 8px 7px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Крестик удаления: место под него есть всегда, а виден он при наведении,
+   поэтому плашка не «прыгает» */
+.task-chip-delete {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin: 0 4px 3px 0;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s, background 0.12s;
+}
+
+.task-chip:hover .task-chip-delete,
+.task-chip-delete:focus-visible {
+  opacity: 0.9;
+}
+
+.task-chip-delete:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.task-chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.task-chip-mark {
+  opacity: 0.8;
+}
+
+.task-chip-meta {
+  flex-shrink: 0;
+  font-weight: 500;
+  opacity: 0.95;
+}
+
+.task-chip-children {
+  opacity: 0.85;
+}
+
+/* Белая шкала прогресса снизу плашки */
+.task-chip-track {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  bottom: 3px;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.task-chip-fill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+  background: #fff;
+}
+
+/* ---------- Модальные окна ---------- */
+
+.modal-layer {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 18, 25, 0.28);
+}
+
+.modal {
+  position: relative;
+  width: min(560px, 100%);
+  max-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  animation: modal-in 0.14s ease-out;
+}
+
+.modal-small {
+  width: min(420px, 100%);
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 17px;
+  font-weight: 650;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.modal-body {
+  padding: 14px 16px 18px;
+  overflow-y: auto;
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* Панель действий в окне задачи: ссылка на родителя слева, кнопки справа */
+.task-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.task-actions-right {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+
+.confirm-text {
+  margin: 0 0 8px;
+  line-height: 1.45;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 6px 12px;
+  margin: 0 0 16px;
+}
+
+.details dt {
+  color: var(--muted);
+}
+
+.details dd {
+  margin: 0;
+}
+
+.description {
+  white-space: pre-wrap;
+}
+
+/* ---------- Прогресс в окне задачи ---------- */
+
+.progress-section {
+  padding: 12px;
+  margin-bottom: 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+}
+
+.progress-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.progress-numbers {
+  font-weight: 400;
+}
+
+.done-badge {
+  margin-left: 8px;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: hsl(120 55% 40%);
+  color: #fff;
+  font-size: 12px;
+}
+
+.progress-bar {
+  height: 10px;
+  border-radius: 5px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.25s ease;
+}
+
+.progress-controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.child-progress {
+  margin-top: 8px;
+}
+
+/* ---------- Подзадачи ---------- */
+
+.subtasks-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.subtask-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.subtasks-total {
+  font-weight: 400;
+}
+
+.subtask-branch {
+  color: var(--muted);
+  margin-right: -4px;
+}
+
+.subtask-count {
+  font-size: 12px;
+}
+
+/* Тонкая шкала прогресса снизу строки подзадачи */
+.subtask-track {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 3px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.subtask-fill {
+  display: block;
+  height: 100%;
+  border-radius: 2px;
+}
+
+/* Строка дерева: сама подзадача и крестик удаления рядом */
+.subtask-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.subtask-delete {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+
+.subtask-row:hover .subtask-delete,
+.subtask-delete:focus-visible {
+  opacity: 1;
+}
+
+.subtask-delete:hover {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+.subtask-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  text-align: left;
+  cursor: pointer;
+}
+
+.subtask-item:hover {
+  border-color: var(--accent);
+}
+
+.subtask-name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subtask-percent {
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+}
+
+.subtask-arrow {
+  color: var(--muted);
+  font-size: 18px;
+}
+
+/* ---------- Форма ---------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-hint {
+  margin-bottom: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.field > span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.field-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* ---------- Узкие экраны ---------- */
+
+@media (max-width: 760px) {
+  .calendar-grid {
+    gap: 3px;
+  }
+
+  .day {
+    min-height: 90px;
+    padding: 3px;
+  }
+
+  .task-chip-meta {
+    display: none;
+  }
+
+  /* На телефоне нет наведения: удаляют из окна задачи, а плашке нужна вся ширина */
+  .task-chip-delete {
+    display: none;
+  }
+
+  .subtask-delete {
+    opacity: 1;
+  }
+
+  .day-number {
+    font-size: 12px;
+    padding: 1px 3px;
+  }
+
+  /* На телефоне нет наведения, а плюс в каждой ячейке загромождает сетку:
+     задачи добавляются общей кнопкой сверху. */
+  .day-add {
+    display: none;
+  }
+}
+
+/* ---------- Теги ---------- */
+
+.tags-button {
+  font-weight: 600;
+}
+
+.tag-list {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+/* На плашке теги идут одной строкой, лишнее обрезается */
+.tag-list-compact {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  max-width: 100%;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-shadow: none;
+}
+
+.tag-pill-compact {
+  flex-shrink: 1;
+  min-width: 0;
+  padding: 0 5px;
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 15px;
+  /* Белая обводка отделяет тег от цветного фона плашки */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.7);
+}
+
+.tag-pill-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag-pill-remove {
+  margin: 0 -4px 0 2px;
+  padding: 0 3px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.tag-pill-remove:hover {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.tag-more {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Плашка в календаре: строка тегов над строкой с названием */
+.task-chip-main {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 3px;
+}
+
+.task-chip-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  min-width: 0;
+}
+
+/* Поле тегов в форме задачи */
+.tag-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 5px 6px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
+
+.tag-field-add {
+  margin-left: auto;
+}
+
+/* Окно тегов */
+.tag-search {
+  display: flex;
+  gap: 8px;
+}
+
+.tag-create-hint {
+  display: block;
+  margin-top: 8px;
+}
+
+.tag-empty {
+  margin: 12px 2px;
+}
+
+.tag-rows {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+.tag-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 2px 4px;
+  border-radius: 8px;
+}
+
+.tag-row:hover {
+  background: var(--surface-2);
+}
+
+.tag-row.is-selected {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.tag-row-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 4px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tag-row-main:disabled {
+  cursor: default;
+}
+
+.tag-check {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--border);
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-contrast);
+}
+
+.tag-row.is-selected .tag-check {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.tag-dot {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.tag-row-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag-rename {
+  flex: 1;
+  min-width: 0;
+}
+
+.tag-row-actions,
+.tag-row-confirm {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.tag-row-confirm .muted {
+  font-size: 12px;
+}
+
+.tag-action {
+  font-size: 16px;
+  opacity: 0;
+}
+
+.tag-row:hover .tag-action,
+.tag-action:focus-visible {
+  opacity: 1;
+}
+
+.tag-footer {
+  align-items: center;
+  margin-top: 14px;
+}
+
+.tag-footer-count {
+  margin-right: auto;
+}
+
+@media (max-width: 760px) {
+  .tag-action {
+    opacity: 1;
+  }
+
+  /* В узкой ячейке имя тега не помещается: на плашке остаются цветные точки */
+  .tag-pill-compact {
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    padding: 0;
+  }
+
+  .tag-pill-compact .tag-pill-name {
+    display: none;
+  }
+
+  .toolbar-actions {
+    flex-wrap: wrap;
+  }
+}
+
+/* ---------- Цвета ---------- */
+
+/* Плашка светлого цвета (жёлтый): тёмный текст и тёмная шкала */
+.task-chip.is-light {
+  color: #1d2129;
+  text-shadow: none;
+}
+
+.task-chip.is-light .task-chip-delete {
+  color: #1d2129;
+}
+
+.task-chip.is-light .task-chip-track {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.task-chip.is-light .task-chip-fill {
+  background: #1d2129;
+}
+
+.color-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-field-compact {
+  flex-shrink: 0;
+}
+
+.color-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.color-preset {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+  transition: transform 0.1s ease;
+}
+
+.color-presets-large .color-preset {
+  width: 28px;
+  height: 28px;
+}
+
+.color-preset:hover {
+  transform: scale(1.12);
+}
+
+/* Выбранный цвет: двойное кольцо — фон окна и акцент */
+.color-preset.is-active {
+  box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent);
+}
+
+.color-custom-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.color-custom-button.is-active {
+  border-color: var(--accent);
+}
+
+.color-wheel-icon {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: conic-gradient(#f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* Компактная кнопка: кружок текущего цвета */
+.color-swatch-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+.color-swatch-button:hover {
+  border-color: var(--accent);
+}
+
+.color-swatch-button .color-swatch {
+  width: 20px;
+  height: 20px;
+}
+
+.color-popover {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 252px;
+  max-width: calc(100vw - 16px);
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
+.color-wheel-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Круг: оттенок по углу (conic), к центру — белый (насыщенность падает) */
+.color-wheel {
+  position: relative;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle closest-side, #fff, rgba(255, 255, 255, 0)),
+    conic-gradient(#f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.color-wheel-shade {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #000;
+  pointer-events: none;
+}
+
+.color-wheel-marker {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.color-brightness {
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.color-brightness::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.color-brightness::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 3px solid #fff;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+.color-hex-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.color-hex-preview {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.color-hex-input {
+  min-width: 0;
+  padding: 5px 8px;
+  font-family: ui-monospace, monospace;
+}
+
+/* Строка тега в режиме изменения: цвет + имя */
+.tag-edit {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ---------- Статистика ---------- */
+
+.view-switch {
+  display: inline-flex;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.view-switch button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.view-switch button.is-active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.stats-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.stats-period {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stats-period-custom {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stats-period-custom label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stats-period-custom .input {
+  width: auto;
+  padding: 5px 8px;
+}
+
+.stats-period-label {
+  margin-top: 6px;
+  font-size: 13px;
+}
+
+.stats-mode {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stats-mode-chip {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stats-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.stats-block-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stats-tiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stats-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--surface-2);
+}
+
+.stats-tile-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stats-tile-value {
+  font-size: 28px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stats-tile-note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stats-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.stats-tabs button {
+  padding: 8px 14px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  background: none;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.stats-tabs button.is-active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+.stats-empty {
+  padding: 12px 2px;
+}
+
+.stats-caption {
+  font-size: 12.5px;
+}
+
+/* Дерево */
+.stats-tree {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stats-node-item > .stats-tree {
+  margin-top: 4px;
+}
+
+.stats-node {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto minmax(80px, 180px) 110px;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 4px;
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.stats-toggle {
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 0;
+}
+
+.stats-toggle:disabled {
+  cursor: default;
+}
+
+.stats-node-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  border: none;
+  background: none;
+  padding: 2px 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.stats-node-main:hover .stats-node-name {
+  color: var(--accent);
+}
+
+.stats-node-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.stats-node-main .tag-list {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.stats-node-steps {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.stats-bar {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.stats-bar i {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 4px;
+}
+
+.stats-bar-start {
+  z-index: 1;
+  filter: brightness(0.75);
+}
+
+/* При сравнении конец светлее: тёмная часть — было, светлая — добавилось за период */
+.stats-bar-end.is-compared {
+  opacity: 0.5;
+}
+
+.stats-node-pct {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.stats-badge {
+  flex-shrink: 0;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.stats-badge-done {
+  background: color-mix(in srgb, #2f9e44 18%, transparent);
+  color: #2f9e44;
+}
+
+.stats-badge-deleted {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+}
+
+/* Изменения */
+.stats-changes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stats-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.stats-chip {
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.stats-chip.is-active {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.stats-chip-count {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.stats-search {
+  width: 220px;
+  max-width: 100%;
+}
+
+.stats-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stats-card-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stats-card-name {
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.stats-chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.stats-chain-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.stats-arrow {
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.stats-step {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 8px 11px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  font-size: 13px;
+  min-width: 0;
+}
+
+.stats-step small {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.stats-step-created {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.stats-step-done {
+  background: color-mix(in srgb, #2f9e44 16%, transparent);
+}
+
+.stats-step-deleted {
+  background: var(--danger-bg);
+}
+
+.stats-step-meta {
+  font-size: 12px;
+}
+
+.stats-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.stats-field-key {
+  min-width: 78px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.stats-field-before {
+  color: var(--muted);
+  text-decoration: line-through;
+  overflow-wrap: anywhere;
+}
+
+.stats-field-after {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.stats-arrow-small {
+  color: var(--muted);
+}
+
+.stats-color {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+}
+
+.stats-tags-diff {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stats-tags-removed .tag-pill {
+  opacity: 0.55;
+  text-decoration: line-through;
+}
+
+@media (max-width: 760px) {
+  .stats-tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .stats-node {
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+  }
+
+  .stats-node .stats-bar {
+    grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  .stats-node-pct {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  /* На узком экране теги в дереве не помещаются рядом с названием */
+  .stats-node-main .tag-list {
+    display: none;
+  }
+
+  .stats-node-steps {
+    display: none;
+  }
+}
